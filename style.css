@@ -1,0 +1,59 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #222222;
+    padding-top: 50px;
+}
+
+.container{
+    width: 80%;
+    margin: auto;
+    background-color: aquamarine;
+}
+
+.row{
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    height: 50px;
+}
+
+.b{
+    height: 30px;
+    width: 30px;
+    background-color: bisque
+}
+
+.boxU{
+    visibility: hidden;
+    height: 30px;
+    width: 30px;
+    background-color: bisque
+}
+
+.dogBG{
+    background-image: url("img/pngegg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.hareBG{
+    background-image: url("img/Leone.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+.selected{
+    background-color: blue;
+}
+/***** UTILITY ******/
+.spB{
+    justify-content: space-between;
+}

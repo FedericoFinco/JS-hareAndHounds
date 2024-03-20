@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hare and Hounds</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row row1">
+            <div class="b box1 boxU" ></div>
+            <div class="b box2" onclick="changeColor(event)" data-diagonal-movements="1"></div>
+            <div class="b box3" onclick="changeColor(event)" data-diagonal-movements="0"></div>
+            <div class="b box4" onclick="changeColor(event)" data-diagonal-movements="1"></div>
+            <div class="b box5 boxU" ></div>
+        </div>
+
+        <div class="row row2">
+            <div class="b box1" onclick="changeColor(event)" data-diagonal-movements="1"></div>
+            <div class="b box2 dogBG" onclick="changeColor(event)" data-diagonal-movements="0"></div>
+            <div class="b box3  " onclick="changeColor(event)" data-diagonal-movements="1"></div>
+            <div class="b box4 hareBG" onclick="changeColor(event)" data-diagonal-movements="0"></div>
+            <div class="b box5" onclick="changeColor(event)" data-diagonal-movements="1"></div>
+        </div>
+
+        <div class="row row3">
+            <div class="b box1 boxU" ></div>
+            <div class="b box2" onclick="changeColor(event)" data-diagonal-movements="1"></div>
+            <div class="b box3" onclick="changeColor(event)" data-diagonal-movements="0"></div>
+            <div class="b box4" onclick="changeColor(event)" data-diagonal-movements="1"></div>
+            <div class="b box5 boxU" ></div>
+        </div>
+
+    </div>
+    <div>
+        <button id="renderButton">Renderizza Campo</button>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+</html>
