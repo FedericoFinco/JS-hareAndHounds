@@ -27,14 +27,39 @@ body{
 .b{
     height: 30px;
     width: 30px;
-    background-color: bisque
+    background-color: bisque;
+    position: relative;
+    text-align: center;
+    z-index: 999;
 }
+
+.b::after{
+    content: ""; 
+    background: white; 
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    top: 0; 
+    bottom: 0;
+}
+
+.b::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    z-index: 1;
+    background: red;
+    
+    transform: rotate(135deg);
+  }
 
 .boxU{
     visibility: hidden;
     height: 30px;
     width: 30px;
-    background-color: bisque
 }
 
 .dogBG{
@@ -57,3 +82,24 @@ body{
 .spB{
     justify-content: space-between;
 }
+
+/* #burst-8 {
+    
+    width: 30px;
+    height: 30px;
+    position: relative;
+    text-align: center;
+    z-index: 5;
+  }
+  #burst-8:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    z-index: 1;
+    background: red;
+    
+    transform: rotate(135deg);
+  } */

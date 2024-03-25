@@ -1,13 +1,24 @@
 let board = [
-    ["","","","",""],
-    ["","","","",""],
-    ["","hare","hound","",""],
+    ["","hound","","",""],
+    ["hound","","","","hare"],
+    ["","hound","","",""],
 ]
 
-
+let stallCounter=0
 let selectedElement; // Definisci selectedElement qui
 let isElementSelected = false; // Variabile booleana per tenere traccia dello stato di selezione
 
+let turnCounter = 0
+tab=document.getElementById('turncounter')
+tab.innerHTML=isTurn()
+
+function isTurn() {
+    if (turnCounter%2==0){
+        return "hound"
+    }else if(turnCounter%2!=0){
+        return "hare"
+    }
+}
 
 function renderPG(){
     for (let index = 0; index < board.length; index++) {
@@ -30,19 +41,24 @@ document.getElementById('renderButton').addEventListener('click', function() {
 });
 
 
+
+
 function changeColor(event) {
     if (!isElementSelected) {
-        // Se nessun elemento è selezionato, consenti la selezione
-        event.target.classList.add("selected");
-        selectedElement = event.target;
-        isElementSelected = true;
+        // Se nessun elemento è selezionato, consenti la selezione in base al turno
+        if (event.target.classList.contains(isTurn()=="hound" ? "dogBG" : "hareBG" )){
+            event.target.classList.add("selected");
+            selectedElement = event.target;
+            isElementSelected = true;
+        
 
-        // Rimuovi l'event listener dai box non selezionati
-        document.querySelectorAll(".b").forEach((box) => {
-            if (box !== selectedElement) {
-                box.removeEventListener("click", changeColor);
-            }
-        });
+            // Rimuovi l'event listener dai box non selezionati
+            document.querySelectorAll(".b").forEach((box) => {
+                if (box !== selectedElement) {
+                    box.removeEventListener("click", changeColor);
+                }
+            });
+        }
     } else {
         // Se un elemento è già selezionato e viene cliccato nuovamente, deselezionalo
         if (event.target === selectedElement) {
@@ -121,11 +137,31 @@ function handleClick(event) {
     console.log(selectedRowIndex, selectedColumnIndex, rowIndex, columnIndex, selectedAnimal, destinationAnimal, diagonalMovementsAllowed)
     console.log("animale destinaziomne", destinationAnimal)
     if (isMoveAllowed(selectedRowIndex, selectedColumnIndex, rowIndex, columnIndex, selectedAnimal,destinationAnimal, diagonalMovementsAllowed)) {
+        //controllo per il counter dello stallo
+        const rowDifference = rowIndex - selectedRowIndex;
+        const columnDifference = columnIndex - selectedColumnIndex;
+        const absoluteRowDifference = Math.abs(rowDifference);
+        const absoluteColumnDifference = Math.abs(columnDifference);
+
+    // if (selectedAnimal=='hound'){
+    //     stallCounter=0
+    //     console.log("LO STALLO CONTATORE è",    stallCounter)
+    // }
+        
+        //se il movimento delle hound è solamente verticale devo contare i turni per lo stallo
+        if (selectedAnimal== 'hound' && absoluteRowDifference==1 && absoluteColumnDifference==0){
+            stallCounter++
+            console.log("LO STALLO CONTATORE è",    stallCounter)
+        //altrimenti devo azzerare il counter
+        }else if(selectedAnimal== 'hound' && absoluteColumnDifference==1){
+            stallCounter=0
+            console.log("LO STALLO CONTATORE è",    stallCounter)
+        }
+
+
         // Se il movimento è consentito, aggiorna l'array bidimensionale
-        console.log("prova")
         board[rowIndex][columnIndex] = selectedAnimal;
         board[selectedRowIndex][selectedColumnIndex] = ''; // Rimuovi l'animale dalla casella precedente
-        console.log("aaaa2")
         // Rendi la casella selezionata vuota nell'interfaccia grafica
         selectedElement.classList.remove('dogBG', 'hareBG');
 
@@ -133,6 +169,9 @@ function handleClick(event) {
         renderPG();
         selectedElement.classList.remove("selected");
         isElementSelected = false;
+        victoryCheck()
+        turnCounter++
+        (document.getElementById('turncounter')).innerHTML=isTurn()
     }
     console.log("arrivo qua")
     // Ripristina il listener per il cambio di colore
@@ -188,6 +227,7 @@ function isMoveAllowed(selectedRowIndex, selectedColumnIndex, rowIndex, columnIn
     if ((absoluteRowDifference === 0 && absoluteColumnDifference === 1) || (absoluteRowDifference === 1 && absoluteColumnDifference === 0)) {
         // La mossa è consentita se la differenza orizzontale o verticale è di una casella
         console.log("E")
+        
         return true;
     }
 
@@ -195,6 +235,7 @@ function isMoveAllowed(selectedRowIndex, selectedColumnIndex, rowIndex, columnIn
     if (diagonalMovementsAllowed && absoluteRowDifference === 1 && absoluteColumnDifference === 1) {
         // La mossa è consentita se la differenza sia verticale che orizzontale è di una casella
         console.log("F")
+        
         return true;
     }
 
@@ -223,6 +264,24 @@ document.querySelectorAll('.b').forEach(box => {
     box.addEventListener('mouseleave', handleMouseLeave);
 });
 
-// function victoryCheck(){
-//     document.querySelectorAll(`.hareBG`)
-// }
+function victoryCheck(){
+    if (stallCounter>=10){
+        console.log("VINCE L'HARE!!!")
+    }else if (board[0][2]=="hare"){
+        if (board[0][1]=="hound" && board[0][3]=="hound" && board[1][2]=="hound"){
+            console.log("VINCONO LE HOUND!!!")
+        }
+    }else if (board[2][2]=="hare"){
+        if (board[2][1]=="hound" && board[2][3]=="hound" && board[1][2]=="hound"){
+            console.log("VINCONO LE HOUND!!!")
+        }
+    
+    }else if (board[1][4]=="hare"){
+        if (board[0][3]=="hound" && board[1][3]=="hound" && board[2][3]=="hound"){
+            console.log("VINCONO LE HOUND!!!")
+        }
+        
+    }else if (board[1][0]=="hare"){
+        console.log("VINCE L'HARE!!!")
+    }
+}
